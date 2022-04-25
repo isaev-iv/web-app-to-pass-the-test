@@ -23,4 +23,10 @@ const smashArray = (arr) => {
 };
 
 const newQuestionsArr = smashArray(data.questions);
-let questionIdx = 0;
+
+//Функция вывода вопроса;
+const renderQuestion = (questions, idx) => {
+  dom.questionNumber.innerHTML = ++idx;
+  dom.question.innerHTML = newQuestionsArr[idx].question;
+};
+renderQuestion(newQuestionsArr, 1);
