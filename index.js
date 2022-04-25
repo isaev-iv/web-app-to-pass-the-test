@@ -5,3 +5,22 @@ const dom = {
   answers: document.getElementById("answers"),
   btn: document.getElementById("btn"),
 };
+
+//Функция рандомной пересортировки эл-ов массива;
+// arr - массив для перетасовки;
+// count - максимальное кол-во эл-ов в новом массиве;
+
+const smashArray = (arr) => {
+  let randomArr = [];
+
+  while (arr.length) {
+    const maxIdx = arr.length - 1;
+    const randomIdx = Math.round(Math.random() * maxIdx);
+    const cutQuestionArr = arr.splice(randomIdx, 1);
+    randomArr.push(...cutQuestionArr);
+  }
+  return randomArr;
+};
+
+const newQuestionsArr = smashArray(data.questions);
+let questionIdx = 0;
