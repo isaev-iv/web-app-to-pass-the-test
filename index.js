@@ -21,12 +21,32 @@ const smashArray = (arr) => {
   }
   return randomArr;
 };
-
 const newQuestionsArr = smashArray(data.questions);
 
-//Функция вывода вопроса;
-const renderQuestion = (questions, idx) => {
-  dom.questionNumber.innerHTML = ++idx;
-  dom.question.innerHTML = newQuestionsArr[idx].question;
+//Функция вывода ответов;
+const renderAnswers = (answers, rightAnswerNumber) => {
+  const answersHtml = [];
+
+  for (let i = 0; i < answers.length; i++) {
+    if (i + 1 === rightAnswerNumber) {
+      answersHtml.push(
+        `<div class='test__answer' data-valid>${answers[i]}</div>`
+      );
+    } else {
+      answersHtml.push(`<div class='test__answer'>${answers[i]}</div>`);
+    }
+  }
+  dom.answers.innerHTML = answersHtml.join();
 };
-renderQuestion(newQuestionsArr, 1);
+
+//Отрисовка вопроса с ответами
+const answers = newQuestionsArr[0].answers;
+const rightAnswerNumber = newQuestionsArr[0].rightAnswer;
+function renderQuestionWithAnswers(data, questionNumber) {
+  const { answers, rightAnswer } = data;
+  dom.question.innerHTML = data.question;
+  dom.questionNumber.innerHTML = questionNumber;
+  renderAnswers(answers, rightAnswerNumber);
+}
+
+renderQuestionWithAnswers(newQuestionsArr[0], 1);
