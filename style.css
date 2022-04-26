@@ -40,7 +40,7 @@ body {
     font-weight: 600;
 }
 .test__answers {
-    background-color:  rgba(206, 242, 244, 0.395);
+    background-color:  rgb(67 239 189 / 39%);
     border-radius: 15px;
     padding: 15px;
     margin-bottom: 32px;
@@ -48,8 +48,15 @@ body {
 .test__answer {
     padding: 8px 15px;
     border-radius: 50px;
-    background-color: rgba(78, 136, 217, 0.193);
+    background-color: rgb(253 253 253 / 84%);
     font-size: 18px;
+    cursor:pointer;
+}
+.test__answer.valid {
+   background-color: rgb(121 242 136 / 84%);
+}
+.test__answer.invalid {
+    background-color: rgb(255 7 68 / 60%);
 }
 .test__answer:not(:last-child) {
     margin-bottom: 15px;
@@ -63,4 +70,12 @@ body {
     margin: 0 auto;
     font-weight: 600;
     color:rgb(66, 61, 61);
+    cursor: pointer;
+}
+
+.test_button.disable {
+    background: rgb(219, 219, 219);
+    pointer-events: none;
+    opacity: 0.4;
+    color:rgb(0, 0, 0);
 }

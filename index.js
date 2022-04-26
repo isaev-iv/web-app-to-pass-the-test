@@ -45,21 +45,22 @@ const renderAnswers = (answers, rightAnswerNumber) => {
 const answers = newQuestionsArr[0].answers;
 const rightAnswerNumber = newQuestionsArr[0].rightAnswer;
 
-function renderQuestionWithAnswers(data, questionNumber) {
+function render(data, questionNumber) {
   const { answers, rightAnswer } = data;
   dom.question.innerHTML = data.question;
   dom.questionNumber.innerHTML = questionNumber;
   renderAnswers(answers, rightAnswerNumber);
+  blockButton(true);
 }
 
-renderQuestionWithAnswers(newQuestionsArr[0], 1);
+render(newQuestionsArr[0], 1);
 
 //Отслеживаем клик по кнопке перехода к следующему вопросу
 dom.btn.onclick = () => {
   const question = newQuestionsArr[questionIdx];
   let questionNumber = questionIdx + 1;
   if (question) {
-    renderQuestionWithAnswers(question, questionNumber);
+    render(question, questionNumber);
     questionIdx++;
     isSelectAnswer = !isSelectAnswer;
   } else {
@@ -74,4 +75,25 @@ dom.answers.onclick = (event) => {
     renderAnswersStatus(event.target);
     isSelectAnswer = !isSelectAnswer;
   }
+  blockButton(false);
 };
+
+// Функция закраски статусов ответов
+function renderAnswersStatus(answer) {
+  if (answer.dataset.valid !== undefined) {
+    answer.classList.add("valid");
+  } else {
+    const validAnswer = answer.parentNode.querySelector("[data-valid]");
+    answer.classList.add("invalid");
+    validAnswer.classList.add("valid");
+  }
+}
+
+// Функция блокировки кнопки перехода, пока не указан ответ
+function blockButton(isDisable) {
+  if (isDisable) {
+    dom.btn.classList.add("disable");
+  } else {
+    dom.btn.classList.remove("disable");
+  }
+}
