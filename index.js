@@ -10,10 +10,10 @@ const dom = {
 // arr - массив для перетасовки;
 // count - максимальное кол-во эл-ов в новом массиве;
 
-const smashArray = (arr) => {
+const smashArray = (arr, count) => {
   let randomArr = [];
 
-  while (arr.length) {
+  while (arr.length && randomArr.length < count) {
     const maxIdx = arr.length - 1;
     const randomIdx = Math.round(Math.random() * maxIdx);
     const cutQuestionArr = arr.splice(randomIdx, 1);
@@ -21,7 +21,9 @@ const smashArray = (arr) => {
   }
   return randomArr;
 };
-const newQuestionsArr = smashArray(data.questions);
+const newQuestionsArr = smashArray(data.questions, 10);
+let questionIdx = 0;
+let isSelectAnswer = false;
 
 //Функция вывода ответов;
 const renderAnswers = (answers, rightAnswerNumber) => {
@@ -36,12 +38,13 @@ const renderAnswers = (answers, rightAnswerNumber) => {
       answersHtml.push(`<div class='test__answer'>${answers[i]}</div>`);
     }
   }
-  dom.answers.innerHTML = answersHtml.join();
+  dom.answers.innerHTML = answersHtml.join(" ");
 };
 
 //Отрисовка вопроса с ответами
 const answers = newQuestionsArr[0].answers;
 const rightAnswerNumber = newQuestionsArr[0].rightAnswer;
+
 function renderQuestionWithAnswers(data, questionNumber) {
   const { answers, rightAnswer } = data;
   dom.question.innerHTML = data.question;
@@ -50,3 +53,25 @@ function renderQuestionWithAnswers(data, questionNumber) {
 }
 
 renderQuestionWithAnswers(newQuestionsArr[0], 1);
+
+//Отслеживаем клик по кнопке перехода к следующему вопросу
+dom.btn.onclick = () => {
+  const question = newQuestionsArr[questionIdx];
+  let questionNumber = questionIdx + 1;
+  if (question) {
+    renderQuestionWithAnswers(question, questionNumber);
+    questionIdx++;
+    isSelectAnswer = !isSelectAnswer;
+  } else {
+    alert("Finish");
+  }
+};
+
+// Отслеживаем клик по выбору ответа
+dom.answers.onclick = (event) => {
+  const isAnswerClick = event.target.classList.contains("test__answer");
+  if (isAnswerClick && !isSelectAnswer) {
+    renderAnswersStatus(event.target);
+    isSelectAnswer = !isSelectAnswer;
+  }
+};
