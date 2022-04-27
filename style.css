@@ -79,3 +79,22 @@ body {
     opacity: 0.4;
     color:rgb(0, 0, 0);
 }
+
+.test__result {
+   text-align: center;
+}
+.test__result-img {
+    font-size: 90px;
+}
+.test__result-status {
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.test__result-status.valid {
+color: rgb(57 196 102 / 93%);
+}
+.test__result-status.invalid {
+color: rgba(196, 57, 57, 0.93);
+}
